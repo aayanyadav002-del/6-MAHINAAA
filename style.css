@@ -1064,3 +1064,79 @@ button {
     font-size: 10px;
   }
 }
+
+/* ===== MEMORIES I'LL KEEP FOREVER ===== */
+
+.polaroid-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 14px !important;
+  width: 100% !important;
+  max-width: 620px !important;
+  margin: 15px auto !important;
+}
+
+.polaroid-grid .polaroid,
+.polaroid-grid .media-frame {
+  width: 100% !important;
+  max-width: none !important;
+  height: 190px !important;
+  margin: 0 !important;
+}
+
+.polaroid-grid img,
+.polaroid-grid video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+@media (max-width: 700px) {
+  .polaroid-grid .polaroid,
+  .polaroid-grid .media-frame {
+    height: 155px !important;
+  }
+}
+
+/* ===== FAVORITE MEMORIES PHOTO GRID FIX ===== */
+
+.photo-wall {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 12px !important;
+  width: 100% !important;
+  max-width: 650px !important;
+  margin: 15px auto !important;
+}
+
+.photo-wall .polaroid,
+.photo-wall .media-frame {
+  width: 100% !important;
+  height: 150px !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+.photo-wall .polaroid img,
+.photo-wall .media-frame img,
+.photo-wall .media-frame video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+@media (max-width: 700px) {
+  .photo-wall {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .photo-wall .polaroid,
+  .photo-wall .media-frame {
+    height: 125px !important;
+  }
+}

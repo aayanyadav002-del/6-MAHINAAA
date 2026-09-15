@@ -272,28 +272,54 @@ function contentFor(page, index) {
     ` + "</div>";
   }
 
-  if (page.type === "collage" || page.type === "photoWall") {
-    return common + `
-      <div class="page-tag">${escapeHTML(page.tag)}</div>
-      <h2 class="page-title">${escapeHTML(page.title)}</h2>
-      ${page.message ? `<p class="message" style="margin:0 0 4px">${escapeHTML(page.message)}</p>` : ""}
-      <div class="polaroid-grid">
-        ${(page.media && page.media.length
-          ? page.media
-          : (page.photos || [])
-        ).slice(0, 6).map((item, i) =>
-          mediaHTML(
-            item,
-            "",
-            typeof item === "object" && item.caption
-              ? item.caption
-              : ["one of my favorites", "this day ♡", "look at us", "memory", "you + me", "another one"][i]
-          )
-        ).join("")}
-      </div>
-      <div class="doodle" style="right:5%;bottom:8%">♡</div>
-    ` + "</div>";
-  }
+ if (page.type === "collage") {
+  return common + `
+    <div class="page-tag">${escapeHTML(page.tag)}</div>
+    <h2 class="page-title">${escapeHTML(page.title)}</h2>
+    ${page.message ? `<p class="message" style="margin:0 0 4px">${escapeHTML(page.message)}</p>` : ""}
+    
+    <div class="polaroid-grid">
+      ${(page.media && page.media.length
+        ? page.media
+        : (page.photos || [])
+      ).slice(0, 6).map((item, i) =>
+        mediaHTML(
+          item,
+          "",
+          typeof item === "object" && item.caption
+            ? item.caption
+            : ["one of my favorites", "this day ♡", "look at us", "memory", "you + me", "another one"][i]
+        )
+      ).join("")}
+    </div>
+
+    <div class="doodle" style="right:5%;bottom:8%">♡</div>
+  ` + "</div>";
+}
+
+if (page.type === "photoWall") {
+  return common + `
+    <div class="page-tag">${escapeHTML(page.tag)}</div>
+    <h2 class="page-title">${escapeHTML(page.title)}</h2>
+
+    <div class="photo-wall">
+      ${(page.media && page.media.length
+        ? page.media
+        : (page.photos || [])
+      ).slice(0, 6).map((item, i) =>
+        mediaHTML(
+          item,
+          "",
+          typeof item === "object" && item.caption
+            ? item.caption
+            : ["one of my favorites", "this day ♡", "look at us", "memory", "you + me", "another one"][i]
+        )
+      ).join("")}
+    </div>
+
+    <div class="doodle" style="right:5%;bottom:8%">♡</div>
+  ` + "</div>";
+}
 
   if (page.type === "notes") {
     return common + `

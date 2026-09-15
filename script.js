@@ -565,43 +565,77 @@ function pauseAllVideos() {
 
 
 function renderPage(index, direction = "next") {
+
   const page = CONFIG.pages[index];
   const html = contentFor(page, index);
 
-  // On mobile, show only the current page.
   leftPage.classList.remove("page-active");
   rightPage.classList.remove("page-active");
 
+  // ===============================
+  // MOBILE
+  // ===============================
   if (window.innerWidth <= 800) {
+
+    // Only one scrapbook page is shown,
+    // but the page itself can scroll vertically.
     rightPage.innerHTML = html;
     rightPage.classList.add("page-active");
+
     leftPage.innerHTML = "";
-  } else {
-    // Desktop uses the current page on the right and a previous page on the left.
+
+  }
+
+  // ===============================
+  // DESKTOP
+  // ===============================
+  else {
+
     rightPage.innerHTML = html;
-    rightPage.classList.add(direction === "next" ? "flip-next" : "flip-prev");
+
+    rightPage.classList.add(
+      direction === "next" ? "flip-next" : "flip-prev"
+    );
 
     if (index > 0) {
-      leftPage.innerHTML = contentFor(CONFIG.pages[index - 1], index - 1);
+
+      leftPage.innerHTML =
+        contentFor(CONFIG.pages[index - 1], index - 1);
+
     } else {
+
       leftPage.innerHTML = `
         <div class="page-content final">
           <div>
             <div class="page-tag">♡ OUR STORY</div>
-            <h2 class="page-title">Every good story<br>has a beginning.</h2>
-            <p class="message">And this one is ours.</p>
+
+            <h2 class="page-title">
+              Every good story<br>
+              has a beginning.
+            </h2>
+
+            <p class="message">
+              And this one is ours.
+            </p>
           </div>
-        </div>`;
+        </div>
+      `;
+
     }
 
-    setTimeout(() => rightPage.classList.remove("flip-next", "flip-prev"), 600);
+    setTimeout(() => {
+      rightPage.classList.remove("flip-next", "flip-prev");
+    }, 600);
   }
 
   pauseAllVideos();
 
   current = index;
+
   pageNumber.textContent = current + 1;
+
   updateNav();
+
   updateThumbnails();
 }
 
@@ -684,23 +718,111 @@ openBtn.addEventListener("click", async () => {
   burstHearts(10);
 });
 
+// ===============================
+// PAGE NAVIGATION
+// ===============================
+
 nextBtn.addEventListener("click", nextPage);
 nextBottom.addEventListener("click", nextPage);
 prevBtn.addEventListener("click", prevPage);
 prevBottom.addEventListener("click", prevPage);
 
+
+// DESKTOP PAGE CLICK
+// Clicking the left/right side of the book changes pages.
+// Clicking media or controls does NOTHING.
 book.addEventListener("click", (event) => {
+
+  // Never turn the page when interacting with media
+  if (
+    event.target.closest("video") ||
+    event.target.closest(".video-frame") ||
+    event.target.closest("audio") ||
+    event.target.closest("button") ||
+    event.target.closest("input") ||
+    event.target.closest("a")
+  ) {
+    return;
+  }
+
+  // On mobile, DON'T use tap-to-turn.
+  // Mobile users should use the buttons or swipe.
   if (window.innerWidth <= 800) return;
 
   const rect = book.getBoundingClientRect();
   const x = event.clientX - rect.left;
 
-  if (x > rect.width * .57) nextPage();
-  else if (x < rect.width * .43) prevPage();
+  if (x > rect.width * 0.57) {
+    nextPage();
+  } 
+  else if (x < rect.width * 0.43) {
+    prevPage();
+  }
 });
 
+
+// MOBILE SWIPE NAVIGATION
 book.addEventListener("touchstart", event => {
+
+  const target = event.target;
+
+  // Don't start a page swipe from a video,
+  // video controls, audio, buttons, inputs, etc.
+  if (
+    target.closest("video") ||
+    target.closest(".video-frame") ||
+    target.closest("audio") ||
+    target.closest("button") ||
+    target.closest("input") ||
+    target.closest("a")
+  ) {
+    touchStartX = null;
+    return;
+  }
+
   touchStartX = event.changedTouches[0].screenX;
+
+}, { passive: true });
+
+
+book.addEventListener("touchend", event => {
+
+  // No swipe was started
+  if (touchStartX === null) return;
+
+  const target = event.target;
+
+  // Never change page if the interaction ended on media/controls
+  if (
+    target.closest("video") ||
+    target.closest(".video-frame") ||
+    target.closest("audio") ||
+    target.closest("button") ||
+    target.closest("input") ||
+    target.closest("a")
+  ) {
+    touchStartX = null;
+    return;
+  }
+
+  const endX = event.changedTouches[0].screenX;
+  const diff = endX - touchStartX;
+
+  // Only a real horizontal swipe changes pages.
+  // Small movements/taps do nothing.
+  if (Math.abs(diff) > 60) {
+
+    if (diff < 0) {
+      nextPage();
+    } 
+    else {
+      prevPage();
+    }
+
+  }
+
+  touchStartX = null;
+
 }, { passive: true });
 
 book.addEventListener("touchend", event => {

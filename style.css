@@ -1000,3 +1000,67 @@ button {
     aspect-ratio: 16 / 11;
   }
 }
+
+/* ===== PHOTO WALL ===== */
+
+.photo-wall {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 600px;
+  margin: 12px auto 0;
+}
+
+/* Images AND videos inside photo wall */
+.photo-wall .polaroid,
+.photo-wall .media-frame {
+  position: relative;
+  width: 100%;
+  height: 145px;
+  min-height: 0;
+  max-width: none;
+  margin: 0;
+  padding: 7px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+/* Make the actual media fit the box */
+.photo-wall .polaroid img,
+.photo-wall .media-frame img,
+.photo-wall .media-frame video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* Captions */
+.photo-wall .media-caption,
+.photo-wall figcaption {
+  font-size: 11px;
+  line-height: 1.15;
+  padding: 4px;
+  margin-top: 3px;
+}
+
+/* Mobile */
+@media (max-width: 800px) {
+  .photo-wall {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .photo-wall .polaroid,
+  .photo-wall .media-frame {
+    height: 120px;
+  }
+
+  .photo-wall .media-caption,
+  .photo-wall figcaption {
+    font-size: 10px;
+  }
+}

@@ -409,6 +409,7 @@ if (page.type === "photoWall") {
     <div class="letter-wrap">
       <div class="letter">
         <h3>${escapeHTML(page.title)}</h3>
+
         ${page.letter
           .split("\n")
           .map(line =>
@@ -418,16 +419,24 @@ if (page.type === "photoWall") {
           )
           .join("")
         }
+
       </div>
     </div>
   ` + "</div>";
 }
-  
+
+} // closes contentFor()
+
+
 function pauseAllVideos() {
   document.querySelectorAll("video").forEach(video => {
-    try { video.pause(); } catch (_) {}
+    try {
+      video.pause();
+    } catch (_) {}
   });
 }
+  
+
 
 function renderPage(index, direction = "next") {
   const page = CONFIG.pages[index];

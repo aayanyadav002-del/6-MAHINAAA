@@ -1140,3 +1140,486 @@ button {
     height: 125px !important;
   }
 }
+
+/* =========================================================
+   MOBILE SCRAPBOOK FIX
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  html {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+
+  /* ---------------------------------
+     BOOK
+     --------------------------------- */
+
+  .book {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    box-sizing: border-box;
+  }
+
+
+  /* ---------------------------------
+     INDIVIDUAL SCRAPBOOK PAGE
+     --------------------------------- */
+
+  .page {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    height: auto !important;
+    min-height: 100dvh !important;
+
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+
+    box-sizing: border-box;
+
+    -webkit-overflow-scrolling: touch;
+
+    touch-action: pan-y;
+  }
+
+
+  /* ---------------------------------
+     PAGE CONTENT
+     --------------------------------- */
+
+  .page-content {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    min-height: 100dvh;
+
+    height: auto !important;
+
+    padding: 24px 18px 60px !important;
+
+    box-sizing: border-box;
+
+    overflow: visible !important;
+  }
+
+
+  /* ---------------------------------
+     LONG TEXT / LETTERS
+     --------------------------------- */
+
+  .message {
+    max-width: 100% !important;
+
+    font-size: 15px;
+
+    line-height: 1.65;
+
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+
+  .letter-wrap {
+    width: 100% !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+
+    display: block !important;
+
+    overflow: visible !important;
+  }
+
+
+  .letter {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+
+    max-height: none !important;
+
+    box-sizing: border-box;
+
+    overflow: visible !important;
+
+    padding: 22px 18px !important;
+  }
+
+
+  .letter p {
+    font-size: 15px;
+
+    line-height: 1.7;
+
+    margin-bottom: 14px;
+
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+
+  /* ---------------------------------
+     TITLES
+     --------------------------------- */
+
+  .page-title {
+    max-width: 100% !important;
+
+    font-size: 25px !important;
+
+    line-height: 1.15;
+
+    overflow-wrap: break-word;
+  }
+
+
+  .page-tag {
+    font-size: 11px;
+  }
+
+
+  /* ---------------------------------
+     VIDEOS
+     --------------------------------- */
+
+  .video-frame,
+  .media-frame {
+    max-width: 100% !important;
+
+    box-sizing: border-box;
+
+    touch-action: manipulation;
+  }
+
+
+  .video-frame video,
+  .media-video {
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    height: auto !important;
+
+    max-height: 55vh;
+
+    display: block;
+
+    object-fit: contain;
+
+    touch-action: manipulation;
+  }
+
+
+  /* ---------------------------------
+     PHOTOS
+     --------------------------------- */
+
+  .polaroid {
+    max-width: 100% !important;
+
+    box-sizing: border-box;
+  }
+
+
+  .polaroid img {
+    max-width: 100% !important;
+
+    height: auto;
+
+    display: block;
+  }
+
+
+  /* ---------------------------------
+     PHOTO GRID
+     --------------------------------- */
+
+  .polaroid-grid {
+    display: grid !important;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 10px !important;
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    margin: 15px auto !important;
+  }
+
+
+  .polaroid-grid .polaroid,
+  .polaroid-grid .media-frame {
+
+    width: 100% !important;
+
+    max-width: none !important;
+
+    min-width: 0 !important;
+
+    height: 145px !important;
+
+    margin: 0 !important;
+
+    overflow: hidden !important;
+
+    box-sizing: border-box;
+  }
+
+
+  .polaroid-grid .polaroid img,
+  .polaroid-grid .media-frame img,
+  .polaroid-grid .media-frame video {
+
+    width: 100% !important;
+
+    height: 100% !important;
+
+    object-fit: cover;
+
+    display: block;
+  }
+
+
+  /* ---------------------------------
+     PHOTO WALL
+     --------------------------------- */
+
+  .photo-wall {
+    display: grid !important;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 9px !important;
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    margin: 12px auto !important;
+  }
+
+
+  .photo-wall .polaroid,
+  .photo-wall .media-frame {
+
+    width: 100% !important;
+
+    height: 125px !important;
+
+    max-width: none !important;
+
+    min-width: 0 !important;
+
+    margin: 0 !important;
+
+    overflow: hidden !important;
+
+    box-sizing: border-box;
+  }
+
+
+  .photo-wall .polaroid img,
+  .photo-wall .media-frame img,
+  .photo-wall .media-frame video {
+
+    width: 100% !important;
+
+    height: 100% !important;
+
+    object-fit: cover;
+
+    display: block;
+  }
+
+
+  /* ---------------------------------
+     BEGINNING PAGE
+     --------------------------------- */
+
+  .two-photo {
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    gap: 22px !important;
+
+    width: 100% !important;
+
+    height: auto !important;
+
+    min-height: 0 !important;
+  }
+
+
+  .two-photo .copy {
+    width: 100% !important;
+
+    max-width: 100% !important;
+  }
+
+
+  .two-photo .photo {
+    width: 88% !important;
+
+    height: auto !important;
+
+    min-height: 280px !important;
+
+    margin: 5px auto 20px !important;
+
+    transform: rotate(2deg) !important;
+  }
+
+
+  .two-photo .photo img,
+  .two-photo .photo video {
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    height: auto !important;
+
+    max-height: 50vh;
+
+    object-fit: contain;
+  }
+
+
+  /* ---------------------------------
+     FEATURED PAGE
+     --------------------------------- */
+
+  .page-content > div[style*="display:flex"] {
+
+    flex-direction: column !important;
+
+    align-items: center !important;
+
+    gap: 18px !important;
+
+    height: auto !important;
+  }
+
+
+  .page-content > div[style*="display:flex"] > div {
+
+    width: 100% !important;
+  }
+
+
+  .page-content > div[style*="display:flex"] > .photo {
+
+    width: 82% !important;
+
+    height: auto !important;
+
+    margin: 5px auto 25px !important;
+  }
+
+
+  /* ---------------------------------
+     TIMELINE
+     --------------------------------- */
+
+  .timeline {
+    width: 100% !important;
+  }
+
+
+  .timeline-row {
+    width: 100% !important;
+
+    box-sizing: border-box;
+
+    padding: 10px !important;
+
+    gap: 8px;
+  }
+
+
+  /* ---------------------------------
+     NOTES
+     --------------------------------- */
+
+  .note-grid {
+    grid-template-columns: 1fr !important;
+
+    width: 100% !important;
+  }
+
+
+  /* ---------------------------------
+     CHECKLIST
+     --------------------------------- */
+
+  .checklist {
+    width: 100% !important;
+  }
+
+
+  .check {
+    font-size: 14px;
+
+    line-height: 1.5;
+  }
+
+
+  /* ---------------------------------
+     SIX MONTHS PAGE
+     --------------------------------- */
+
+  .six-months {
+    width: 100% !important;
+
+    height: auto !important;
+
+    min-height: 70vh !important;
+  }
+
+
+  .big-six {
+    font-size: clamp(100px, 30vw, 180px) !important;
+
+    line-height: .9;
+  }
+
+
+  .six-copy {
+    font-size: 15px !important;
+
+    line-height: 1.7;
+  }
+
+
+  /* ---------------------------------
+     PREVENT DECORATIONS FROM
+     MAKING THE PAGE TOO WIDE
+     --------------------------------- */
+
+  .sticker,
+  .doodle,
+  .tape {
+    max-width: 40vw;
+  }
+
+}

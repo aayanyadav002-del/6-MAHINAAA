@@ -551,7 +551,7 @@ function contentFor(page, index) {
     <h2 class="page-title">Our Story</h2>
     <p class="message">A little piece of our story. ❤️</p>
   ` + "</div>";
-}()
+}
 
 
 function pauseAllVideos() {

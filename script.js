@@ -379,19 +379,24 @@ function contentFor(page, index) {
   }
 
   if (page.type === "letter") {
-    return common + `
-      <div class="letter-wrap">
-        <div class="letter">
-          <h3>${escapeHTML(page.title)}</h3>
-          ${escapeHTML(page.letter).split("\n").map(line => line.trim() ? `<p>${escapeHTML(line)}</p>` : `<div style="height:5px"></div>`).join("")}
-        </div>
+  return common + `
+    <div class="letter-wrap">
+      <div class="letter">
+        <h3>${escapeHTML(page.title)}</h3>
+        ${page.letter
+          .split("\n")
+          .map(line =>
+            line.trim()
+              ? `<p>${escapeHTML(line)}</p>`
+              : `<div style="height:5px"></div>`
+          )
+          .join("")
+        }
       </div>
-    ` + "</div>";
-  }
-
-  return common + `<h2 class="page-title">${escapeHTML(page.title)}</h2></div>`;
+    </div>
+  ` + "</div>";
 }
-
+  
 function pauseAllVideos() {
   document.querySelectorAll("video").forEach(video => {
     try { video.pause(); } catch (_) {}

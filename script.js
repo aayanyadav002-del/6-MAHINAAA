@@ -250,6 +250,7 @@ function imageHTML(src, className = "", caption = "") {
 function contentFor(page, index) {
   const common = `<div class="page-content">`;
 
+  // PAGE 1 — BEGINNING
   if (page.type === "beginning") {
     return common + `
       <div class="two-photo">
@@ -259,73 +260,79 @@ function contentFor(page, index) {
           <p class="message">${escapeHTML(page.message)}</p>
           <p class="date">${escapeHTML(page.date)}</p>
         </div>
+
         <div class="photo" style="height:72%; width:50%; transform:rotate(3deg)">
           ${mediaHTML(
-            (page.media && page.media.length ? page.media[0] : (page.photos && page.photos[0])),
+            page.media && page.media.length
+              ? page.media[0]
+              : (page.photos && page.photos[0]),
             "",
             "us ♡"
           )}
         </div>
       </div>
+
       <div class="tape t1"></div>
-      <div class="sticker" style="right:7%;top:10%">made with love ♡</div>
+      <div class="sticker" style="right:7%;top:10%">
+        made with love ♡
+      </div>
     ` + "</div>";
   }
 
- if (page.type === "collage") {
-  return common + `
-    <div class="page-tag">${escapeHTML(page.tag)}</div>
-    <h2 class="page-title">${escapeHTML(page.title)}</h2>
-    ${page.message ? `<p class="message" style="margin:0 0 4px">${escapeHTML(page.message)}</p>` : ""}
-    
-    <div class="polaroid-grid">
-      ${(page.media && page.media.length
-        ? page.media
-        : (page.photos || [])
-      ).slice(0, 6).map((item, i) =>
-        mediaHTML(
-          item,
-          "",
-          typeof item === "object" && item.caption
-            ? item.caption
-            : ["one of my favorites", "this day ♡", "look at us", "memory", "you + me", "another one"][i]
-        )
-      ).join("")}
-    </div>
 
-    <div class="doodle" style="right:5%;bottom:8%">♡</div>
-  ` + "</div>";
-}
+  // PAGE 2 — COLLAGE
+  if (page.type === "collage") {
+    const media = page.media && page.media.length
+      ? page.media
+      : (page.photos || []);
 
-if (page.type === "photoWall") {
-  return common + `
-    <div class="page-tag">${escapeHTML(page.tag)}</div>
-    <h2 class="page-title">${escapeHTML(page.title)}</h2>
+    return common + `
+      <div class="page-tag">${escapeHTML(page.tag)}</div>
 
-    <div class="photo-wall">
-      ${(page.media && page.media.length
-        ? page.media
-        : (page.photos || [])
-      ).slice(0, 6).map((item, i) =>
-        mediaHTML(
-          item,
-          "",
-          typeof item === "object" && item.caption
-            ? item.caption
-            : ["one of my favorites", "this day ♡", "look at us", "memory", "you + me", "another one"][i]
-        )
-      ).join("")}
-    </div>
+      <h2 class="page-title">${escapeHTML(page.title)}</h2>
 
-    <div class="doodle" style="right:5%;bottom:8%">♡</div>
-  ` + "</div>";
-}
+      ${page.message
+        ? `<p class="message" style="margin:0 0 4px">
+             ${escapeHTML(page.message)}
+           </p>`
+        : ""
+      }
 
+      <div class="polaroid-grid">
+        ${media.slice(0, 6).map((item, i) =>
+          mediaHTML(
+            item,
+            "",
+            typeof item === "object" && item.caption
+              ? item.caption
+              : [
+                  "one of my favorites",
+                  "this day ♡",
+                  "look at us",
+                  "memory",
+                  "you + me",
+                  "another one"
+                ][i]
+          )
+        ).join("")}
+      </div>
+
+      <div class="doodle" style="right:5%;bottom:8%">♡</div>
+    ` + "</div>";
+  }
+
+
+  // PAGE 3 — NOTES
   if (page.type === "notes") {
     return common + `
       <div class="page-tag">${escapeHTML(page.tag)}</div>
+
       <h2 class="page-title">${escapeHTML(page.title)}</h2>
-      <p class="message" style="margin:0">A few things I could never stop loving about you...</p>
+
+      <p class="message" style="margin:0">
+        A few things I could never stop loving about you...
+      </p>
+
       <div class="note-grid">
         ${page.notes.map(n => `
           <div class="note">
@@ -334,54 +341,141 @@ if (page.type === "photoWall") {
           </div>
         `).join("")}
       </div>
+
       <div class="sticker" style="right:7%;bottom:8%">♡♡♡</div>
     ` + "</div>";
   }
 
+
+  // PAGE 4 / 9 — PHOTO WALL
+  if (page.type === "photoWall") {
+    const media = page.media && page.media.length
+      ? page.media
+      : (page.photos || []);
+
+    return common + `
+      <div class="page-tag">${escapeHTML(page.tag)}</div>
+
+      <h2 class="page-title">${escapeHTML(page.title)}</h2>
+
+      <div class="photo-wall">
+        ${media.slice(0, 6).map((item, i) =>
+          mediaHTML(
+            item,
+            "",
+            typeof item === "object" && item.caption
+              ? item.caption
+              : [
+                  "one of my favorites",
+                  "this day ♡",
+                  "look at us",
+                  "memory",
+                  "you + me",
+                  "another one"
+                ][i]
+          )
+        ).join("")}
+      </div>
+
+      <div class="doodle" style="right:5%;bottom:8%">♡</div>
+    ` + "</div>";
+  }
+
+
+  // PAGE 5 — FEATURED
   if (page.type === "featured") {
     return common + `
       <div class="page-tag">${escapeHTML(page.tag)}</div>
+
       <h2 class="page-title">${escapeHTML(page.title)}</h2>
+
       <div style="display:flex;align-items:center;gap:25px;height:78%">
         <div style="width:52%">
-          <p class="message">${escapeHTML(page.message)}</p>
-          <p class="date">${escapeHTML(page.date)}</p>
+          <p class="message">
+            ${escapeHTML(page.message)}
+          </p>
+
+          <p class="date">
+            ${escapeHTML(page.date)}
+          </p>
         </div>
-        <div class="photo" style="position:relative;width:46%;height:85%;transform:rotate(-3deg)">
+
+        <div
+          class="photo"
+          style="
+            position:relative;
+            width:46%;
+            height:85%;
+            transform:rotate(-3deg)
+          "
+        >
           ${mediaHTML(
-            (page.media && page.media.length ? page.media[0] : page.photo),
+            page.media && page.media.length
+              ? page.media[0]
+              : page.photo,
             "",
             "keep this one ♡"
           )}
         </div>
       </div>
-      <div class="tape" style="right:19%;top:13%;transform:rotate(4deg)"></div>
+
+      <div
+        class="tape"
+        style="
+          right:19%;
+          top:13%;
+          transform:rotate(4deg)
+        "
+      ></div>
     ` + "</div>";
   }
 
+
+  // PAGE 6 — SIX MONTHS
   if (page.type === "six") {
     return common + `
       <div class="six-months">
         <div>
-          <div class="page-tag">${escapeHTML(page.tag)}</div>
+          <div class="page-tag">
+            ${escapeHTML(page.tag)}
+          </div>
+
           <div class="big-six">6</div>
-          <h2 class="page-title" style="margin-top:15px">MONTHS</h2>
+
+          <h2
+            class="page-title"
+            style="margin-top:15px"
+          >
+            MONTHS
+          </h2>
+
           <div class="six-copy">
             Six months of laughs.<br>
             Six months of memories.<br>
             Six months of random conversations.<br>
             Six months of being us.<br><br>
-            <b>Six months... and I'd still choose you. ❤️</b>
+
+            <b>
+              Six months... and I'd still choose you. ❤️
+            </b>
           </div>
         </div>
       </div>
     ` + "</div>";
   }
 
+
+  // PAGE 7 — TIMELINE
   if (page.type === "timeline") {
     return common + `
-      <div class="page-tag">${escapeHTML(page.tag)}</div>
-      <h2 class="page-title">${escapeHTML(page.title)}</h2>
+      <div class="page-tag">
+        ${escapeHTML(page.tag)}
+      </div>
+
+      <h2 class="page-title">
+        ${escapeHTML(page.title)}
+      </h2>
+
       <div class="timeline">
         ${page.months.map(m => `
           <div class="timeline-row">
@@ -390,42 +484,74 @@ if (page.type === "photoWall") {
           </div>
         `).join("")}
       </div>
-      <p class="message" style="text-align:center;margin-top:20px">And somehow every month keeps getting better. ♡</p>
+
+      <p
+        class="message"
+        style="text-align:center;margin-top:20px"
+      >
+        And somehow every month keeps getting better. ♡
+      </p>
     ` + "</div>";
   }
 
+
+  // PAGE 8 — CHECKLIST
   if (page.type === "checklist") {
     return common + `
-      <div class="page-tag">${escapeHTML(page.tag)}</div>
-      <h2 class="page-title">${escapeHTML(page.title)}</h2>
+      <div class="page-tag">
+        ${escapeHTML(page.tag)}
+      </div>
+
+      <h2 class="page-title">
+        ${escapeHTML(page.title)}
+      </h2>
+
       <div class="checklist">
-        ${page.items.map(item => `<div class="check">☑ ${escapeHTML(item)}</div>`).join("")}
+        ${page.items.map(item => `
+          <div class="check">
+            ☑ ${escapeHTML(item)}
+          </div>
+        `).join("")}
       </div>
     ` + "</div>";
   }
 
+
+  // PAGE 10 — LETTER
   if (page.type === "letter") {
-  return common + `
-    <div class="letter-wrap">
-      <div class="letter">
-        <h3>${escapeHTML(page.title)}</h3>
+    return common + `
+      <div class="letter-wrap">
+        <div class="letter">
 
-        ${page.letter
-          .split("\n")
-          .map(line =>
-            line.trim()
-              ? `<p>${escapeHTML(line)}</p>`
-              : `<div style="height:5px"></div>`
-          )
-          .join("")
-        }
+          <h3>
+            ${escapeHTML(page.title)}
+          </h3>
 
+          ${String(page.letter || "")
+            .split("\n")
+            .map(line => {
+              if (line.trim()) {
+                return `<p>${escapeHTML(line)}</p>`;
+              }
+
+              return `<div style="height:5px"></div>`;
+            })
+            .join("")
+          }
+
+        </div>
       </div>
-    </div>
-  ` + "</div>";
-}
+    ` + "</div>";
+  }
 
-} // closes contentFor()
+
+  // FALLBACK
+  return common + `
+    <div class="page-tag">♡</div>
+    <h2 class="page-title">Our Story</h2>
+    <p class="message">A little piece of our story. ❤️</p>
+  ` + "</div>";
+}()
 
 
 function pauseAllVideos() {
